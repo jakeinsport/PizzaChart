@@ -1,0 +1,190 @@
+!pip install mplsoccer
+
+# Importing relevant packages
+import pandas as pd
+from mplsoccer import PyPizza
+import matplotlib.pyplot as plt
+
+# Set the background color for the entire figure
+plt.rcParams['figure.facecolor'] = '#0D1117'
+
+# Ousmane Dembélé's stats from past 365 days - using percentiles
+player_data = {
+    # FINISHING metrics
+    'Goals': 99,
+    'Expected Goals': 99,
+    'Shots on Target': 97,
+
+    # PLAYMAKING metrics
+    'Assists': 98,
+    'Expected Assists': 99,
+    'Key Passes': 99,
+
+    # MOVEMENT metrics
+    'Progressive Carries': 99,
+    'Progressive Passes Rec': 99,
+    'Touches in Att Pen': 99
+}
+
+player_name = 'Ousmane Dembélé'
+
+# Columns to plot (in order)
+columns_to_plot = [
+    # Finishing
+    'Goals',
+    'Expected Goals',
+    'Shots on Target',
+    # Playmaking
+    'Assists',
+    'Expected Assists',
+    'Key Passes',
+    # Movement
+    'Progressive Carries',
+    'Progressive Passes Rec',
+    'Touches in Att Pen'
+]
+
+# Define colors for each category
+slice_colors = [
+    '#00C853', '#00C853', '#00C853',  # Finishing - Dark Green
+    '#6CABDD', '#6CABDD', '#6CABDD',  # Playmaking - Blue
+    '#FF8C00', '#FF8C00', '#FF8C00'   # Movement - Orange
+]
+
+# Get player values in the correct order
+player_values = [player_data[col] for col in columns_to_plot]
+
+# Setup the pizza plot
+pizza = PyPizza(
+    params=columns_to_plot,
+    background_color='#0D1117',
+    straight_line_color='white',
+    straight_line_lw=1,
+    last_circle_lw=0,
+    other_circle_color='white',
+    other_circle_ls='-',
+    other_circle_lw=1
+)
+
+# Create the figure and plot
+fig, ax = pizza.make_pizza(
+    figsize=(10, 10),
+    values=player_values,
+    slice_colors=slice_colors,
+    kwargs_slices=dict(
+        edgecolor="black",
+        linewidth=1.5
+    ),
+    kwargs_params=dict(
+        color='#FFFFFF',
+        fontsize=11,
+        fontproperties='monospace'
+    ),
+    kwargs_values=dict(
+        color='#FFFFFF',
+        fontsize=10,
+        bbox={
+            'edgecolor': 'black',
+            'facecolor': '#0D1117',
+            "boxstyle": 'round, pad=.2',
+            "lw": 1.5
+        }
+    )
+)
+
+# Set the figure background color
+fig.patch.set_facecolor('#0D1117')
+
+# Adjust the margins to add space around the plot
+fig.subplots_adjust(top=0.85, bottom=0.15, left=0.15, right=0.85)
+
+# Add the title
+ax.text(
+    x=0.5,
+    y=1.15,
+    s=player_name,
+    fontsize=24,
+    c='#FFFFFF',
+    ha='center',
+    va='center',
+    weight='bold',
+    transform=ax.transAxes
+)
+
+# Add category legend
+legend_y = 1.08
+
+# Finishing
+ax.text(
+    x=0.2, y=legend_y,
+    s='● Finishing',
+    fontsize=12,
+    color='#00C853',
+    ha='center',
+    va='center',
+    transform=ax.transAxes,
+    weight='bold'
+)
+
+# Playmaking
+ax.text(
+    x=0.5, y=legend_y,
+    s='● Playmaking',
+    fontsize=12,
+    color='#6CABDD',
+    ha='center',
+    va='center',
+    transform=ax.transAxes,
+    weight='bold'
+)
+
+# Movement
+ax.text(
+    x=0.8, y=legend_y,
+    s='● Movement',
+    fontsize=12,
+    color='#FF8C00',
+    ha='center',
+    va='center',
+    transform=ax.transAxes,
+    weight='bold'
+)
+
+# Add the subtitle
+ax.text(
+    x=0.5,
+    y=-0.15,
+    s='Data: Past 365 Days | All Competitions | Compared with Forwards',
+    fontsize=9,
+    color='#FFFFFF',
+    ha='center',
+    va='center',
+    fontproperties='monospace',
+    transform=ax.transAxes
+)
+
+# Display the plot
+plt.show()
+
+# Display player stats
+print(f"\n{player_name} - Percentile Rankings:\n")
+print("=" * 50)
+print("\nFINISHING:")
+for i in range(3):
+    print(f"  {columns_to_plot[i]:.<35} {player_values[i]}")
+print("\nPLAYMAKING:")
+for i in range(3, 6):
+    print(f"  {columns_to_plot[i]:.<35} {player_values[i]}")
+print("\nMOVEMENT:")
+for i in range(6, 9):
+    print(f"  {columns_to_plot[i]:.<35} {player_values[i]}")
+print("\n" + "=" * 50)
+print("\nKEY INSIGHTS:")
+print("🌟 ABSOLUTELY ELITE - Best overall profile!")
+print("✅ 99th percentile: 7 out of 9 metrics!")
+print("✅ Perfect finishing: Goals (99), xG (99)")
+print("✅ Perfect playmaking: Assists (98), xAG (99), Key Passes (99)")
+print("✅ Perfect movement: All 99th percentile")
+print("🏆 The most complete attacker in world football!")
+print("📊 7.55 progressive passes per 90 (99th percentile)")
+print("📊 1.08 npxG + xAG per 90 (99th percentile)")
