@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # Set the background color for the entire figure
 plt.rcParams['figure.facecolor'] = '#0D1117'
 
-# Ousmane Dembélé's stats from past 365 days - using percentiles
+# Ousmane Dembélé's stats from past 365 days - using percentiles (I used FBref for this data)
 player_data = {
     # FINISHING metrics
     'Goals': 99,
